@@ -25,8 +25,8 @@ importers:
         version: 1.6.0
     devDependencies:
       '@daimywil/roblox-ts-nevermore':
-        specifier: github:Serokai/nts#nevermore-patches
-        version: https://codeload.github.com/Serokai/nts/tar.gz/789a9d59114e90ad26f94ef8144b81daab2d009b
+        specifier: github:Serokai/nts#v9.0.0-nevermore.1
+        version: git+https://github.com/Serokai/nts.git#789a9d59114e90ad26f94ef8144b81daab2d009b
       '@rbxts/compiler-types':
         specifier: 3.0.0-types.0
         version: 3.0.0-types.0
@@ -54,8 +54,8 @@ importers:
 
 packages:
 
-  '@daimywil/roblox-ts-nevermore@https://codeload.github.com/Serokai/nts/tar.gz/789a9d59114e90ad26f94ef8144b81daab2d009b':
-    resolution: {tarball: https://codeload.github.com/Serokai/nts/tar.gz/789a9d59114e90ad26f94ef8144b81daab2d009b}
+  '@daimywil/roblox-ts-nevermore@git+https://github.com/Serokai/nts.git#789a9d59114e90ad26f94ef8144b81daab2d009b':
+    resolution: {commit: 789a9d59114e90ad26f94ef8144b81daab2d009b, repo: https://github.com/Serokai/nts.git, type: git}
     version: 9.0.0
     hasBin: true
 
@@ -577,7 +577,7 @@ packages:
 
 snapshots:
 
-  '@daimywil/roblox-ts-nevermore@https://codeload.github.com/Serokai/nts/tar.gz/789a9d59114e90ad26f94ef8144b81daab2d009b':
+  '@daimywil/roblox-ts-nevermore@git+https://github.com/Serokai/nts.git#789a9d59114e90ad26f94ef8144b81daab2d009b':
     dependencies:
       '@roblox-ts/luau-ast': 2.0.0
       '@roblox-ts/path-translator': 1.1.0
