@@ -16,12 +16,6 @@ pnpm run generate-barrel # Regen src/shared/nevermore.d.ts
 
 `postinstall` runs `overlay-types` + `generate-barrel` automatically.
 
-## Architecture
-
-- **DI**: ServiceBag. `GameService` / `GameServiceClient` register sub-services; `Init()` runs across all, then `Start()`. Never do work in constructors. See `ExampleService.ts` for the canonical shape.
-- **Nevermore types**: owned in-repo under `types/nevermore/`, overlayed into `node_modules/@quenty/*` on install. Edit the `.d.ts` files directly.
-- **Nevermore patches**: put patched files under `patches/@quenty/<pkg>/<same path as in node_modules>/`. Overlayed on install alongside types.
-
 ## YOU MUST: wrap any @quenty class before `extends`
 
 roblox-ts `extends` doesn't work on raw `@quenty/*` Lua classes — they have no `super.constructor`. Every class you want to extend needs a wrapper. The template ships with `lua/shared/Shared/BaseObjectWrapper.lua` as the canonical pattern:
@@ -56,7 +50,7 @@ For any other @quenty class, create a matching `lua/shared/Shared/<Name>Wrapper.
 ### Add a new ServiceBag service
 1. Create `src/modules/<area>/<Server|Client|Shared>/<Name>Service.ts` like `ExampleService`.
 2. Register via `serviceBag.GetService(<Name>Service)` inside `GameService.Init()` or `GameServiceClient.Init()`.
-3. Capture dependencies in `Init(serviceBag)`, run side effects in `Start()`.
+3. Capture dependencies in `Init(serviceBag)`, run side effects in `Start()`. Never do work in constructors — `Init` runs across all services before any `Start`.
 
 ## Template updates
 
