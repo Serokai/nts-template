@@ -1,0 +1,21 @@
+{
+  "js/ts.tsdk.path": "node_modules\\typescript\\lib",
+  "roblox-ts.boundary.diagnosticsMode": "off",
+  "js/ts.preferences.includePackageJsonAutoImports": "on",
+  "js/ts.tsserver.maxMemory": 8192,
+  "eslint.useFlatConfig": true,
+  "eslint.codeActionsOnSave.rules": ["simple-import-sort/imports", "simple-import-sort/exports"],
+  "js/ts.tsserver.experimental.enableProjectDiagnostics": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  }
+}

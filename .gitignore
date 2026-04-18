@@ -1,0 +1,7 @@
+node_modules/
+out/
+include/
+src/shared/nevermore.d.ts
+*.log
+.DS_Store
+Thumbs.db

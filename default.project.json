@@ -1,0 +1,53 @@
+{
+  "name": "nts-template",
+  "globIgnorePaths": [
+    "**/.package-lock.json",
+    "**/.pnpm",
+    "**/.pnpm-workspace-state-v1.json",
+    "**/.modules.yaml",
+    "**/.ignored",
+    "**/.ignored_*"
+  ],
+  "tree": {
+    "$className": "DataModel",
+    "ServerScriptService": {
+      "$className": "ServerScriptService",
+      "Game": {
+        "$className": "Folder",
+        "$ignoreUnknownInstances": true,
+        "rbxts_include": {
+          "$path": "include"
+        },
+        "lua": {
+          "$path": "lua"
+        },
+        "game": {
+          "$path": "out/modules"
+        },
+        "node_modules": {
+          "$className": "Folder",
+          "@quenty": {
+            "$path": "node_modules/@quenty"
+          },
+          "@rbxts": {
+            "$path": "node_modules/@rbxts"
+          }
+        }
+      },
+      "GameScripts": {
+        "$className": "Folder",
+        "$path": "out/scripts/Server"
+      }
+    },
+    "StarterPlayer": {
+      "$className": "StarterPlayer",
+      "StarterPlayerScripts": {
+        "$className": "StarterPlayerScripts",
+        "GameScripts": {
+          "$className": "Folder",
+          "$path": "out/scripts/Client"
+        }
+      }
+    }
+  }
+}
