@@ -2,16 +2,14 @@ import { Brio } from '@quenty/brio';
 import { Maid } from '@quenty/maid';
 import { Promise } from '@quenty/promise';
 import { Observable } from '@quenty/rx';
-import { CheckType, ValueObject } from '@quenty/valueobject';
+import { CheckType, ValueObject, ValueObjectLike } from '@quenty/valueobject';
 import { SpringObject } from './SpringObject';
 import { Signal, SignalLike } from '@quenty/signal';
 
 export type ToPropertyObservableArgument<T> =
   | Observable<T>
   | Promise<T>
-  | {
-      Observe(): T;
-    }
+  | ValueObjectLike<T>
   | ValueBase;
 
 type BlendProps<T extends Instance> = {
@@ -66,8 +64,20 @@ export namespace Blend {
     acceleration: unknown
   ): Observable<number>;
   function Spring<T>(
-    ...args: ConstructorParameters<typeof SpringObject<T>>
-  ): Observable<SpringObject<T>>;
+    source: ValueObjectLike<T>,
+    speed?: number | ToPropertyObservableArgument<number>,
+    damper?: number | ToPropertyObservableArgument<number>
+  ): Observable<T>;
+  function Spring<T>(
+    source: Observable<T>,
+    speed?: number | ToPropertyObservableArgument<number>,
+    damper?: number | ToPropertyObservableArgument<number>
+  ): Observable<T>;
+  function Spring<T>(
+    source: T,
+    speed?: number | ToPropertyObservableArgument<number>,
+    damper?: number | ToPropertyObservableArgument<number>
+  ): Observable<T>;
   function toPropertyObservable(
     value: ToPropertyObservableArgument<unknown>
   ): Observable | undefined;
