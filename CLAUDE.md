@@ -82,5 +82,5 @@ If the merge reports conflicts, open each conflicted file, keep the right side (
 - Edit `src/shared/nevermore.d.ts` — auto-generated. Run `pnpm run generate-barrel`.
 - Import from `src/shared/nevermore` at runtime — `.d.ts` barrel, zero runtime. Import `@quenty/*` directly.
 - Use `npx rbxtsc` — use `pnpm run build` to avoid npm hoist warnings.
-- Change `node-linker=hoisted` in `.npmrc` — Nevermore's Lua loader relies on flat `node_modules`.
+- Remove `public-hoist-pattern[]=@quenty/*` or `@rbxts/*` from `.npmrc` — Rojo's `$path` glob and the roblox-ts string-require transform both expect these scopes directly under `node_modules/`.
 - Run `pnpm install --ignore-scripts` — skips `postinstall`, so types never overlay into `node_modules/@quenty/*` and the compiler will see wrong types.
