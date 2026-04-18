@@ -6,3 +6,5 @@ export interface ChatProviderCommandServiceClient {
   Start(): void;
   GetChatTagKeyList(): string[];
 }
+
+export const ChatProviderCommandServiceClient: ChatProviderCommandServiceClient;

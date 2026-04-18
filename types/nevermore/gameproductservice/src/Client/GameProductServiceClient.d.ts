@@ -55,3 +55,5 @@ export interface GameProductServiceClient {
   ): Promise<boolean>;
   Destroy(): void;
 }
+
+export const GameProductServiceClient: GameProductServiceClient;

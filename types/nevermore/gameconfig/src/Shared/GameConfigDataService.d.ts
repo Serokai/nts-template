@@ -7,3 +7,5 @@ export interface GameConfigDataService {
   SetConfigPicker(configPicker: GameConfigPicker): void;
   GetConfigPicker(): GameConfigPicker;
 }
+
+export const GameConfigDataService: GameConfigDataService;

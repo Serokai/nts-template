@@ -4,3 +4,5 @@ export interface IdleService {
   readonly ServiceName: 'IdleService';
   Init(serviceBag: ServiceBag): void;
 }
+
+export const IdleService: IdleService;

@@ -15,3 +15,5 @@ export interface SoundEffectService {
   ): () => void;
   Destroy(): void;
 }
+
+export const SoundEffectService: SoundEffectService;

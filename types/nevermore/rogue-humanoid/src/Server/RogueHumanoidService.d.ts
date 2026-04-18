@@ -4,3 +4,5 @@ export interface RogueHumanoidService {
   readonly ServiceName: 'RogueHumanoidService';
   Init(serviceBag: ServiceBag): void;
 }
+
+export const RogueHumanoidService: RogueHumanoidService;

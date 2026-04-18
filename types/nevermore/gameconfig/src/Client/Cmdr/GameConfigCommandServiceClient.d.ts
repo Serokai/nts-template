@@ -6,3 +6,5 @@ export interface GameConfigCommandServiceClient {
   Start(): void;
   Destroy(): void;
 }
+
+export const GameConfigCommandServiceClient: GameConfigCommandServiceClient;

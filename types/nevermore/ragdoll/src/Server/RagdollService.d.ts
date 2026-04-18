@@ -7,3 +7,5 @@ export interface RagdollService {
   SetRagdollOnDeath(ragdollOnDeath: boolean): void;
   SetUnragdollAutomatically(unragdollAutomatically: boolean): void;
 }
+
+export const RagdollService: RagdollService;

@@ -6,3 +6,5 @@ export interface RagdollServiceClient {
   SetScreenShakeEnabled(value: boolean): void;
   GetScreenShakeEnabled(): boolean;
 }
+
+export const RagdollServiceClient: RagdollServiceClient;

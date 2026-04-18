@@ -7,3 +7,5 @@ export interface ResetService {
   PromiseResetCharacter(player: Player): Promise;
   Destroy(): void;
 }
+
+export const ResetService: ResetService;

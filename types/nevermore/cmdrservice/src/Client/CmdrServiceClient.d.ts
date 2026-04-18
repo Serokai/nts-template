@@ -7,3 +7,5 @@ export interface CmdrServiceClient {
   PromiseCmdr(): Promise<CmdrClient>;
   Destroy(): void;
 }
+
+export const CmdrServiceClient: CmdrServiceClient;

@@ -14,3 +14,5 @@ export interface HumanoidTrackerService {
   ObserveAliveHumanoidBrio(player?: Player): Observable<Brio<Humanoid>>;
   Destroy(): void;
 }
+
+export const HumanoidTrackerService: HumanoidTrackerService;

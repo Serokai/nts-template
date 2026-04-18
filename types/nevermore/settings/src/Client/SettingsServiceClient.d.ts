@@ -28,3 +28,5 @@ export interface SettingsServiceClient {
   ): Promise<PlayerSettingsClient>;
   Destroy(): void;
 }
+
+export const SettingsServiceClient: SettingsServiceClient;

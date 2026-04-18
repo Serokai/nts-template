@@ -8,3 +8,5 @@ export interface BindToCloseService {
   RegisterPromiseOnCloseCallback(saveCallback: () => Promise): () => void;
   Destroy(): void;
 }
+
+export const BindToCloseService: BindToCloseService;

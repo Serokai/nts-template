@@ -5,3 +5,5 @@ export interface SoundGroupServiceClient {
   Init(serviceBag: ServiceBag): void;
   Destroy(): void;
 }
+
+export const SoundGroupServiceClient: SoundGroupServiceClient;

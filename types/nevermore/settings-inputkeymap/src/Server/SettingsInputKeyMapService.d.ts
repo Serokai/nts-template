@@ -6,3 +6,5 @@ export interface SettingsInputKeyMapService {
   Start(): void;
   Destroy(): void;
 }
+
+export const SettingsInputKeyMapService: SettingsInputKeyMapService;

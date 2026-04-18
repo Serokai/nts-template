@@ -21,3 +21,5 @@ export interface ReceiptProcessingService {
   ): () => void;
   Destroy(): void;
 }
+
+export const ReceiptProcessingService: ReceiptProcessingService;

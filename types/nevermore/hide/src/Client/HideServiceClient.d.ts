@@ -4,3 +4,5 @@ export interface HideServiceClient {
   readonly ServiceName: 'HideServiceClient';
   Init(serviceBag: ServiceBag): void;
 }
+
+export const HideServiceClient: HideServiceClient;

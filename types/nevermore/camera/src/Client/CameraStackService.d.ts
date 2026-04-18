@@ -28,3 +28,5 @@ export interface CameraStackService {
   Add(state: CameraEffect): void;
   Destroy(): void;
 }
+
+export const CameraStackService: CameraStackService;

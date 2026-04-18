@@ -16,3 +16,5 @@ export interface TransparencyService {
   ResetTransparency(key: unknown, part: Instance): void;
   Destroy(): void;
 }
+
+export const TransparencyService: TransparencyService;

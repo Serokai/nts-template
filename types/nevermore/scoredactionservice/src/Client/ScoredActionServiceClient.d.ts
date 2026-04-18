@@ -14,3 +14,5 @@ export interface ScoredActionServiceClient {
   ): Operator<InputKeyMapList, ScoredAction>;
   Destroy(): void;
 }
+
+export const ScoredActionServiceClient: ScoredActionServiceClient;

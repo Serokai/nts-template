@@ -21,3 +21,5 @@ export interface DeathReportService {
   ReportDeathReport(deathReport: DeathReport): void;
   Destroy(): void;
 }
+
+export const DeathReportService: DeathReportService;

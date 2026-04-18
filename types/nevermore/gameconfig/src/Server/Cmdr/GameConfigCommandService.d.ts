@@ -5,3 +5,5 @@ export interface GameConfigCommandService {
   Init(serviceBag: ServiceBag): void;
   Start(): void;
 }
+
+export const GameConfigCommandService: GameConfigCommandService;

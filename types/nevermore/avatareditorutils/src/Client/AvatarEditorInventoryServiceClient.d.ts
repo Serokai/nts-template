@@ -16,3 +16,5 @@ export interface AvatarEditorInventoryServiceClient {
   PromiseEnsureAccess(): Promise<boolean>;
   Destroy(): void;
 }
+
+export const AvatarEditorInventoryServiceClient: AvatarEditorInventoryServiceClient;

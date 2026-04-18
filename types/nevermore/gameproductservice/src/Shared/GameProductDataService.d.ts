@@ -56,3 +56,5 @@ export interface GameProductDataService {
   ): Promise<boolean>;
   Destroy(): void;
 }
+
+export const GameProductDataService: GameProductDataService;

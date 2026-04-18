@@ -6,3 +6,5 @@ export interface ResetServiceClient {
   PromiseResetCharacter(): Promise;
   Destroy(): void;
 }
+
+export const ResetServiceClient: ResetServiceClient;

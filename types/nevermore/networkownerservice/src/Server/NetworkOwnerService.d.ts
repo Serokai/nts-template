@@ -6,3 +6,5 @@ export interface NetworkOwnerService {
     player: Player | undefined
   ): () => void;
 }
+
+export const NetworkOwnerService: NetworkOwnerService;

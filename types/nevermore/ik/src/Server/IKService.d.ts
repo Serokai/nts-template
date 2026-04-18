@@ -12,3 +12,5 @@ export interface IKService {
   UpdateServerRigTarget(humanoid: Humanoid, target: Vector3): void;
   Destroy(): void;
 }
+
+export const IKService: IKService;

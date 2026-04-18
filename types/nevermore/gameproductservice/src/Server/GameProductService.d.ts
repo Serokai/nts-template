@@ -51,3 +51,5 @@ export interface GameProductService {
   ): Observable<boolean>;
   Destroy(): void;
 }
+
+export const GameProductService: GameProductService;

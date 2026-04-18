@@ -11,3 +11,5 @@ export interface TimeSyncService {
   ObserveSyncedClock(): Observable<BaseClock>;
   Destroy(): void;
 }
+
+export const TimeSyncService: TimeSyncService;

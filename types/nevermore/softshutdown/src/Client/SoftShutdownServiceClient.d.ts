@@ -5,3 +5,5 @@ export interface SoftShutdownServiceClient {
   Init(serviceBag: ServiceBag): void;
   Destroy(): void;
 }
+
+export const SoftShutdownServiceClient: SoftShutdownServiceClient;

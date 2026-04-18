@@ -14,3 +14,5 @@ export interface TextFilterServiceClient {
   PromisePreviewNonChatStringForBroadcast(text: string): Promise<string>;
   ObservePreviewNonChatStringForBroadcast(text: string): Observable<string>;
 }
+
+export const TextFilterServiceClient: TextFilterServiceClient;

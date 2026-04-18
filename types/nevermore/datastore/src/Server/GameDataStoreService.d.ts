@@ -8,3 +8,5 @@ export interface GameDataStoreService {
   PromiseDataStore(): Promise<DataStore<unknown>>;
   Destroy(): void;
 }
+
+export const GameDataStoreService: GameDataStoreService;

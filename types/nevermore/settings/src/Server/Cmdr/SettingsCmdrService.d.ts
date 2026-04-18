@@ -6,3 +6,5 @@ export interface SettingsCmdrService {
   Start(): void;
   Destroy(): void;
 }
+
+export const SettingsCmdrService: SettingsCmdrService;

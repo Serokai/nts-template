@@ -16,3 +16,5 @@ export interface SnackbarServiceClient {
   ClearQueue(doNotAnimate?: boolean): void;
   Destroy(): void;
 }
+
+export const SnackbarServiceClient: SnackbarServiceClient;

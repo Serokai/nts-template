@@ -12,3 +12,5 @@ export interface UserInfoService {
   ObserveDisplayName(userId: number): Observable<UserInfo>;
   Destroy(): void;
 }
+
+export const UserInfoService: UserInfoService;

@@ -8,3 +8,5 @@ export interface InputModeServiceClient {
   GetInputMode(inputModeType: InputModeType): InputMode;
   Destroy(): void;
 }
+
+export const InputModeServiceClient: InputModeServiceClient;

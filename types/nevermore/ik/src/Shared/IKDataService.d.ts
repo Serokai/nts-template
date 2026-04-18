@@ -11,3 +11,5 @@ export interface IKDataService {
   ObserveRig(humanoid: Humanoid): Observable<IKRigBase>;
   ObserveRigBrio(humanoid: Humanoid): Observable<Brio<IKRigBase>>;
 }
+
+export const IKDataService: IKDataService;

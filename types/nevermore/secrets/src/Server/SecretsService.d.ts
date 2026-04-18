@@ -16,3 +16,5 @@ export interface SecretsService {
   PromiseSecretKeyNamesList(): Promise<string[]>;
   Destroy(): void;
 }
+
+export const SecretsService: SecretsService;

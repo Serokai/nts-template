@@ -10,3 +10,5 @@ export interface SpawnService {
   Update(): void;
   Destroy(): void;
 }
+
+export const SpawnService: SpawnService;

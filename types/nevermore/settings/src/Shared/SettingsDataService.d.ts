@@ -25,3 +25,5 @@ export interface SettingsDataService {
   GetPlayerSettings(player: Player): PlayerSettingsBase;
   Destroy(): void;
 }
+
+export const SettingsDataService: SettingsDataService;

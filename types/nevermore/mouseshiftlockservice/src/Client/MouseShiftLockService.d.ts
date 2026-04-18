@@ -4,3 +4,5 @@ export interface MouseShiftLockService {
   EnableShiftLock(): void;
   DisableShiftLock(): void;
 }
+
+export const MouseShiftLockService: MouseShiftLockService;

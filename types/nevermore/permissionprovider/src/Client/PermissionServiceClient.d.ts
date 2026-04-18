@@ -9,3 +9,5 @@ export interface PermissionServiceClient {
   PromisePermissionProvider(): Promise<PermissionProviderClient>;
   Destroy(): void;
 }
+
+export const PermissionServiceClient: PermissionServiceClient;

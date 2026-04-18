@@ -7,3 +7,5 @@ export interface ScreenshotHudServiceClient {
   PushModel(screenshotHudModel: ScreenshotHudModel): () => void;
   Destroy(): void;
 }
+
+export const ScreenshotHudServiceClient: ScreenshotHudServiceClient;

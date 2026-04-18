@@ -17,3 +17,5 @@ export interface IdleServiceClient {
   PushDisable(): () => void;
   Destroy(): void;
 }
+
+export const IdleServiceClient: IdleServiceClient;

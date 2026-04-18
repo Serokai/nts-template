@@ -7,3 +7,5 @@ export interface TieRealmService {
   SetTieRealm(tieRealm: TieRealm): void;
   GetTieRealm(): TieRealm;
 }
+
+export const TieRealmService: TieRealmService;

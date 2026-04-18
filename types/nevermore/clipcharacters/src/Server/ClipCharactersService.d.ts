@@ -5,3 +5,5 @@ export interface ClipCharactersService {
   Init(serviceBag: ServiceBag): void;
   Destroy(): void;
 }
+
+export const ClipCharactersService: ClipCharactersService;

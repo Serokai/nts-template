@@ -17,3 +17,5 @@ export interface PlayerInputModeService {
     player: Player
   ): Observable<PlayerInputMode | undefined>;
 }
+
+export const PlayerInputModeService: PlayerInputModeService;

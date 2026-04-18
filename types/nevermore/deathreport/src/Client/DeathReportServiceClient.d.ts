@@ -14,3 +14,5 @@ export interface DeathReportServiceClient {
   GetLastDeathReports(): DeathReport[];
   Destroy(): void;
 }
+
+export const DeathReportServiceClient: DeathReportServiceClient;

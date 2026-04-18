@@ -6,3 +6,5 @@ export interface SecretsCommandService {
   Start(): void;
   Destroy(): void;
 }
+
+export const SecretsCommandService: SecretsCommandService;

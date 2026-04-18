@@ -12,3 +12,5 @@ export interface PlayerInputModeServiceClient {
   GetPlayerInputModeType(player: Player): PlayerInputMode | undefined;
   Destroy(): void;
 }
+
+export const PlayerInputModeServiceClient: PlayerInputModeServiceClient;

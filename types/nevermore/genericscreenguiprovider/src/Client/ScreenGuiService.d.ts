@@ -9,3 +9,5 @@ export interface ScreenGuiService {
   ObservePlayerGui(): Observable<Instance>;
   Destroy(): void;
 }
+
+export const ScreenGuiService: ScreenGuiService;

@@ -13,3 +13,5 @@ export interface TranslatorService {
   GetLocaleId(): string;
   Destroy(): void;
 }
+
+export const TranslatorService: TranslatorService;

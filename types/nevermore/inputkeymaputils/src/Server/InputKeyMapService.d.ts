@@ -4,3 +4,5 @@ export interface InputKeyMapService {
   readonly ServiceName: 'InputKeyMapService';
   Init(serviceBag: ServiceBag): void;
 }
+
+export const InputKeyMapService: InputKeyMapService;

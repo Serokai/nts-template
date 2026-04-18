@@ -8,3 +8,5 @@ export interface GameConfigServiceClient {
   GetConfigPicker(): GameConfigPicker;
   Destroy(): void;
 }
+
+export const GameConfigServiceClient: GameConfigServiceClient;

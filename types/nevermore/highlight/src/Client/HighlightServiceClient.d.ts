@@ -13,3 +13,5 @@ export interface HighlightServiceClient {
   ): AnimatedHighlightModel;
   Destroy(): void;
 }
+
+export const HighlightServiceClient: HighlightServiceClient;

@@ -8,3 +8,5 @@ export interface SecretsServiceClient {
   PromiseSecretKeyNamesList(): Promise<string[]>;
   Destroy(): void;
 }
+
+export const SecretsServiceClient: SecretsServiceClient;

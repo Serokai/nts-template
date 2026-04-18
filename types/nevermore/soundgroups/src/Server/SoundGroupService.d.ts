@@ -6,3 +6,5 @@ export interface SoundGroupService {
   Start(): void;
   Destroy(): void;
 }
+
+export const SoundGroupService: SoundGroupService;

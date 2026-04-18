@@ -9,3 +9,5 @@ export interface PrivateServerDataStoreService {
   SetCustomKey(customKey: string): void;
   Destroy(): void;
 }
+
+export const PrivateServerDataStoreService: PrivateServerDataStoreService;

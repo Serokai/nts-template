@@ -23,3 +23,5 @@ export interface PermissionService {
   ): Observable<Brio<Player>>;
   Destroy(): void;
 }
+
+export const PermissionService: PermissionService;

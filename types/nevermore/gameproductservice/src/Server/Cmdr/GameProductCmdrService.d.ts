@@ -5,3 +5,5 @@ export interface GameProductCmdrService {
   Init(serviceBag: ServiceBag): void;
   Start(): void;
 }
+
+export const GameProductCmdrService: GameProductCmdrService;

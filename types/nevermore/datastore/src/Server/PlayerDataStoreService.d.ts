@@ -14,3 +14,5 @@ export interface PlayerDataStoreService {
   PromiseManager(): Promise<PlayerDataStoreManager>;
   Destroy(): void;
 }
+
+export const PlayerDataStoreService: PlayerDataStoreService;

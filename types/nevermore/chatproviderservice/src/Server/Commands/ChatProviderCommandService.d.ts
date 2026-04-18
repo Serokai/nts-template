@@ -7,3 +7,5 @@ export interface ChatProviderCommandService {
   GetChatTagKeyList(): string[];
   Destroy(): void;
 }
+
+export const ChatProviderCommandService: ChatProviderCommandService;

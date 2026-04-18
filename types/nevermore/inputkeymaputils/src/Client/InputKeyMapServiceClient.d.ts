@@ -10,3 +10,5 @@ export interface InputKeyMapServiceClient {
   ): InputKeyMapList | undefined;
   Destroy(): void;
 }
+
+export const InputKeyMapServiceClient: InputKeyMapServiceClient;

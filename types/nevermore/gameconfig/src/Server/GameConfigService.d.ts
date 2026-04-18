@@ -22,3 +22,5 @@ export interface GameConfigService {
   GetPreferredParent(): Instance;
   Destroy(): void;
 }
+
+export const GameConfigService: GameConfigService;

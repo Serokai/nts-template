@@ -17,3 +17,5 @@ export interface SettingsService {
   ): Promise<PlayerSettings>;
   Destroy(): void;
 }
+
+export const SettingsService: SettingsService;

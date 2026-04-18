@@ -4,3 +4,5 @@ export interface SpawnCmdrService {
   readonly ServiceName: 'SpawnCmdrService';
   Init(serviceBag: ServiceBag): void;
 }
+
+export const SpawnCmdrService: SpawnCmdrService;

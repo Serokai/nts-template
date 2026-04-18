@@ -15,3 +15,5 @@ export interface IKServiceClient {
   GetLocalPlayerRig(): IKRigClient | undefined;
   Destroy(): void;
 }
+
+export const IKServiceClient: IKServiceClient;

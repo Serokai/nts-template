@@ -9,3 +9,5 @@ export interface RoguePropertyCacheService {
     roguePropertyDefinition: RoguePropertyDefinition<T>
   ): RoguePropertyCache<T>;
 }
+
+export const RoguePropertyCacheService: RoguePropertyCacheService;

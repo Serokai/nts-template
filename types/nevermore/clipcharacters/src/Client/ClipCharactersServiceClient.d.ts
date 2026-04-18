@@ -7,3 +7,5 @@ export interface ClipCharactersServiceClient {
   PushDisableCharacterCollisionsWithDefault(): () => void;
   Destroy(): void;
 }
+
+export const ClipCharactersServiceClient: ClipCharactersServiceClient;

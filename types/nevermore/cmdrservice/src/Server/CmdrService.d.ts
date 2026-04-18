@@ -12,3 +12,5 @@ export interface CmdrService {
   ): void;
   Destroy(): void;
 }
+
+export const CmdrService: CmdrService;

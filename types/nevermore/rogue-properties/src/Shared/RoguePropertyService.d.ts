@@ -6,3 +6,5 @@ export interface RoguePropertyService {
   CanInitializeProperties(): boolean;
   Destroy(): void;
 }
+
+export const RoguePropertyService: RoguePropertyService;
