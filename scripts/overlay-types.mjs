@@ -36,6 +36,7 @@ const copyDts = (src, dst) => {
 };
 
 for (const pkg of readdirSync(nodeModulesQuenty)) {
+  if (pkg.startsWith(".")) continue;
   const pkgDir = join(nodeModulesQuenty, pkg);
   if (!statSync(pkgDir).isDirectory()) continue;
   const source = join(typesDir, pkg);

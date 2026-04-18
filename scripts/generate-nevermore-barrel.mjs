@@ -5,6 +5,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, "..");
@@ -17,60 +18,69 @@ if (!existsSync(nodeModulesQuenty)) {
   process.exit(0);
 }
 
-function parseLocalExports(dtsContent) {
-  const symbols = new Set();
-
-  const declRegex =
-    /^\s*export\s+(?:declare\s+)?(?:const|let|var|function|class|interface|type|namespace|enum)\s+([A-Za-z_$][A-Za-z0-9_$]*)/gm;
-  for (const m of dtsContent.matchAll(declRegex)) {
-    symbols.add(m[1]);
+const sourceCache = new Map();
+function loadSource(file) {
+  let src = sourceCache.get(file);
+  if (!src) {
+    const content = readFileSync(file, "utf8");
+    src = ts.createSourceFile(file, content, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+    sourceCache.set(file, src);
   }
+  return src;
+}
 
-  const listRegex = /^\s*export\s*\{([^}]+)\}/gm;
-  for (const m of dtsContent.matchAll(listRegex)) {
-    for (const item of m[1].split(",")) {
-      const trimmed = item.trim();
-      if (!trimmed) continue;
-      const parts = trimmed.split(/\s+as\s+/);
-      const name = parts[parts.length - 1].trim();
-      if (/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name)) symbols.add(name);
+function hasExportModifier(node) {
+  const modifiers = ts.canHaveModifiers(node) ? ts.getModifiers(node) : undefined;
+  return modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword) ?? false;
+}
+
+function parseFile(source) {
+  const locals = new Set();
+  const reexportStars = [];
+  const reexportNamed = [];
+
+  for (const stmt of source.statements) {
+    if (ts.isExportDeclaration(stmt)) {
+      const spec = stmt.moduleSpecifier;
+      if (spec && ts.isStringLiteral(spec)) {
+        if (!stmt.exportClause) {
+          reexportStars.push(spec.text);
+        } else if (ts.isNamedExports(stmt.exportClause)) {
+          const names = new Set();
+          for (const el of stmt.exportClause.elements) names.add(el.name.text);
+          reexportNamed.push({ path: spec.text, names });
+        }
+      } else if (stmt.exportClause && ts.isNamedExports(stmt.exportClause)) {
+        for (const el of stmt.exportClause.elements) locals.add(el.name.text);
+      }
+      continue;
+    }
+
+    if (!hasExportModifier(stmt)) continue;
+
+    if (ts.isVariableStatement(stmt)) {
+      for (const d of stmt.declarationList.declarations) {
+        if (ts.isIdentifier(d.name)) locals.add(d.name.text);
+      }
+    } else if (
+      ts.isClassDeclaration(stmt) ||
+      ts.isFunctionDeclaration(stmt) ||
+      ts.isInterfaceDeclaration(stmt) ||
+      ts.isTypeAliasDeclaration(stmt) ||
+      ts.isEnumDeclaration(stmt) ||
+      ts.isModuleDeclaration(stmt)
+    ) {
+      if (stmt.name && ts.isIdentifier(stmt.name)) locals.add(stmt.name.text);
     }
   }
 
-  return symbols;
-}
-
-function parseReexportStars(dtsContent) {
-  const paths = [];
-  const re = /^\s*export\s*\*\s*from\s*['"]([^'"]+)['"]/gm;
-  for (const m of dtsContent.matchAll(re)) {
-    paths.push(m[1]);
-  }
-  return paths;
-}
-
-function parseReexportNamed(dtsContent) {
-  const results = [];
-  const re = /^\s*export\s*\{([^}]+)\}\s*from\s*['"]([^'"]+)['"]/gm;
-  for (const m of dtsContent.matchAll(re)) {
-    const names = new Set();
-    for (const item of m[1].split(",")) {
-      const trimmed = item.trim();
-      if (!trimmed) continue;
-      const parts = trimmed.split(/\s+as\s+/);
-      const name = parts[parts.length - 1].trim();
-      if (/^[A-Za-z_$][A-Za-z0-9_$]*$/.test(name)) names.add(name);
-    }
-    results.push({ path: m[2], names });
-  }
-  return results;
+  return { locals, reexportStars, reexportNamed };
 }
 
 function resolveDtsPath(fromFile, relPath) {
   const base = resolve(dirname(fromFile), relPath);
-  const candidates = [`${base}.d.ts`, join(base, "index.d.ts")];
-  for (const c of candidates) {
-    if (existsSync(c)) return c;
+  for (const candidate of [`${base}.d.ts`, join(base, "index.d.ts")]) {
+    if (existsSync(candidate)) return candidate;
   }
   return null;
 }
@@ -82,50 +92,45 @@ function collectPackageSymbols(pkgDir) {
   const exposed = new Set();
   const visited = new Set();
 
-  const visitFile = (file, filterNames = null) => {
+  const visit = (file, filterNames) => {
     if (visited.has(file)) return;
     visited.add(file);
 
-    const content = readFileSync(file, "utf8");
-    const localSymbols = parseLocalExports(content);
+    const { locals, reexportStars, reexportNamed } = parseFile(loadSource(file));
 
     if (filterNames) {
-      for (const name of filterNames) {
-        if (localSymbols.has(name)) exposed.add(name);
-        else exposed.add(name);
-      }
+      for (const name of filterNames) exposed.add(name);
     } else {
-      for (const s of localSymbols) exposed.add(s);
+      for (const s of locals) exposed.add(s);
     }
 
-    for (const relPath of parseReexportStars(content)) {
+    for (const relPath of reexportStars) {
       const resolved = resolveDtsPath(file, relPath);
-      if (resolved) visitFile(resolved, null);
+      if (resolved) visit(resolved, null);
     }
 
-    for (const { path: relPath, names } of parseReexportNamed(content)) {
+    for (const { path: relPath, names } of reexportNamed) {
       const resolved = resolveDtsPath(file, relPath);
-      if (resolved) visitFile(resolved, names);
+      if (resolved) visit(resolved, names);
       else for (const n of names) exposed.add(n);
     }
   };
 
-  visitFile(indexFile, null);
+  visit(indexFile, null);
   return exposed;
 }
+
+const packages = readdirSync(nodeModulesQuenty)
+  .filter((name) => !name.startsWith("."))
+  .filter((name) => existsSync(join(nodeModulesQuenty, name, "index.d.ts")))
+  .sort();
 
 const packageSymbols = new Map();
 const symbolOwner = new Map();
 const collisions = [];
 
-const packages = readdirSync(nodeModulesQuenty)
-  .filter((name) => existsSync(join(nodeModulesQuenty, name, "index.d.ts")))
-  .sort();
-
 for (const pkg of packages) {
-  const pkgDir = join(nodeModulesQuenty, pkg);
-  const symbols = collectPackageSymbols(pkgDir);
-
+  const symbols = collectPackageSymbols(join(nodeModulesQuenty, pkg));
   const owned = new Set();
   for (const symbol of symbols) {
     if (symbolOwner.has(symbol)) {
@@ -138,10 +143,7 @@ for (const pkg of packages) {
   packageSymbols.set(pkg, owned);
 }
 
-const lines = [
-  "// AUTO-GENERATED by scripts/generate-nevermore-barrel.mjs — do not edit.",
-  "",
-];
+const lines = ["// AUTO-GENERATED by scripts/generate-nevermore-barrel.mjs — do not edit.", ""];
 
 let totalExported = 0;
 for (const pkg of packages) {
@@ -160,8 +162,7 @@ for (const pkg of packages) {
 }
 
 if (collisions.length > 0) {
-  lines.push("");
-  lines.push("// Collisions (kept first, skipped duplicates):");
+  lines.push("", "// Collisions (kept first, skipped duplicates):");
   for (const c of collisions) {
     lines.push(`//   ${c.symbol}: kept @quenty/${c.winner}, skipped @quenty/${c.loser}`);
   }
