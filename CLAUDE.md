@@ -54,13 +54,15 @@ For any other @quenty class, create a matching `lua/shared/Shared/<Name>Wrapper.
 
 ## Template updates
 
+To pull improvements from the template into an existing game repo:
+
 ```bash
-git remote add template https://github.com/Serokai/nts-template.git
+git remote add template https://github.com/Serokai/nts-template.git  # first time only
 git fetch template
 git merge template/main --allow-unrelated-histories
 ```
 
-Resolve conflicts, commit.
+If the merge reports conflicts, open each conflicted file, keep the right side (your game code wins on gameplay files; the template wins on tooling like `scripts/`, `types/nevermore/`, `CLAUDE.md`), then `git add <file>` and `git commit` to finalize the merge.
 
 ## Code style
 
