@@ -33,6 +33,7 @@ For any other @quenty class, create a matching `lua/shared/Shared/<Name>Wrapper.
 1. Open `types/nevermore/<pkg>/src/<Server|Client|Shared>/<Module>.d.ts`.
 2. Add the signature, matching neighbouring declarations.
 3. `pnpm run overlay-types`.
+4. In application code, import from `@quenty/<pkg>` (not `types/nevermore/<pkg>` — see DO NOT below).
 
 ### Add types for a whole @quenty package that has none
 1. Inspect `node_modules/@quenty/<pkg>/` to read the Lua surface.
@@ -91,6 +92,7 @@ If the merge reports conflicts, open each conflicted file, keep the right side (
 
 - Edit `src/shared/nevermore.d.ts` — auto-generated. Run `pnpm run generate-barrel`.
 - Import from `src/shared/nevermore` at runtime — `.d.ts` barrel, zero runtime. Import `@quenty/*` directly.
+- Import from `types/nevermore/<pkg>` — that path is the overlay source, not a runtime module. Always import `@quenty/<pkg>`. If `@quenty/<pkg>` doesn't resolve, the fix is `pnpm add @quenty/<pkg>`, not rewriting the import to `types/...`. Importing from `types/nevermore/` compiles without error but silently degrades types to `any` whenever a transitive @quenty package isn't installed — losing all inference with no TS warning.
 - Use `npx rbxtsc` — use `pnpm run build` to avoid npm hoist warnings.
 - Remove `public-hoist-pattern[]=@quenty/*` or `@rbxts/*` from `.npmrc` — Rojo's `$path` glob and the roblox-ts string-require transform both expect these scopes directly under `node_modules/`.
 - Run `pnpm install --ignore-scripts` — skips `postinstall`, so types never overlay into `node_modules/@quenty/*` and the compiler will see wrong types.
