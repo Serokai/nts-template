@@ -1,6 +1,8 @@
 # nts-template
 
-Roblox-TS template: roblox-ts (Daimywil fork) + NevermoreEngine + ServiceBag DI, Rojo sync, pnpm with `node-linker=hoisted` (**required** — Nevermore loader breaks otherwise).
+Nevermore is a collection of Lua modules that accelerate Roblox development so you can focus on gameplay. This template wires Nevermore into a TypeScript project (roblox-ts Daimywil fork) with type ownership and a patching workflow pre-configured.
+
+Stack: roblox-ts (Daimywil fork) + NevermoreEngine + ServiceBag DI, Rojo sync, pnpm with `node-linker=hoisted` (**required** — Nevermore loader breaks otherwise).
 
 ## Commands
 
@@ -16,33 +18,20 @@ pnpm run generate-barrel # Regen src/shared/nevermore.d.ts
 
 ## Architecture
 
-- **DI**: ServiceBag. `GameService` / `GameServiceClient` register sub-services; `Init()` runs across all, then `Start()`. Never do work in constructors.
+- **DI**: ServiceBag. `GameService` / `GameServiceClient` register sub-services; `Init()` runs across all, then `Start()`. Never do work in constructors. See `ExampleService.ts` for the canonical shape.
 - **Nevermore types**: owned in-repo under `types/nevermore/`, overlayed into `node_modules/@quenty/*` on install. Edit the `.d.ts` files directly.
 - **Nevermore patches**: put patched files under `patches/@quenty/<pkg>/<same path as in node_modules>/`. Overlayed on install alongside types.
 
-```typescript
-export class MyService {
-  private _serviceBag!: ServiceBag;
-  public Init(serviceBag: ServiceBag) {
-    assert(!this._serviceBag, "Already initialized");
-    this._serviceBag = serviceBag;
-  }
-  public Start() {}
-}
-```
+## YOU MUST: wrap any @quenty class before `extends`
 
-## YOU MUST: wrapper for `extends BaseObject`
-
-roblox-ts `extends` doesn't work on raw `@quenty/*` Lua classes (no `super.constructor`). Use the wrapper:
+roblox-ts `extends` doesn't work on raw `@quenty/*` Lua classes — they have no `super.constructor`. Every class you want to extend needs a wrapper. The template ships with `lua/shared/Shared/BaseObjectWrapper.lua` as the canonical pattern:
 
 ```typescript
 import BaseObject from "lua/shared/Shared/BaseObjectWrapper";
-class MyClass extends BaseObject<Part> {
-  /* super(instance) works */
-}
+class MyClass extends BaseObject<Part> { /* super(instance) works */ }
 ```
 
-Never `import { BaseObject } from "@quenty/baseobject"` with `extends`.
+For any other @quenty class, create a matching `lua/shared/Shared/<Name>Wrapper.lua` following the same delegation pattern, then import from it. If you see code doing `import { X } from "@quenty/<pkg>"` followed by `extends X`, flag it — that will silently break at runtime.
 
 ## Common tasks
 
