@@ -8,9 +8,9 @@ interface Static {
   readonly ClassName: 'Binder';
 }
 
-export interface Binder<T> extends Static {
+export interface Binder<T, TArgs extends unknown[] = unknown[]> extends Static {
   readonly ServiceName: string;
-  Init(): void;
+  Init(...args: TArgs): void;
   Start(): void;
   GetTag(): string;
   GetConstructor(): new (instance: Instance, ...args: unknown[]) => T;
@@ -42,11 +42,21 @@ export interface Binder<T> extends Static {
 interface BinderConstructor extends Static {
   isBinder: (value: unknown) => value is Binder<unknown>;
 
+  new <TClass, I extends Instance>(
+    tagName: string,
+    constructor: new (instance: I) => TClass
+  ): Binder<TClass, []>;
+
   new <TClass, TArgs extends unknown[], I extends Instance>(
     tagName: string,
     constructor: new (instance: I, ...args: TArgs) => TClass,
     ...args: TArgs
-  ): Binder<TClass>;
+  ): Binder<TClass, TArgs>;
+
+  new <TClass, TArgs extends unknown[], I extends Instance>(
+    tagName: string,
+    constructor: new (instance: I, ...args: TArgs) => TClass
+  ): Binder<TClass, TArgs>;
 }
 
 export const Binder: BinderConstructor;
