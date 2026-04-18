@@ -39,7 +39,7 @@ For any other @quenty class, create a matching `lua/shared/Shared/<Name>Wrapper.
 1. Inspect `node_modules/@quenty/<pkg>/` to read the Lua surface.
 2. Create `types/nevermore/<pkg>/index.d.ts` re-exporting each submodule.
 3. For each Lua module, write the matching `.d.ts` under the same relative path.
-4. `pnpm run overlay-types && pnpm run generate-barrel && pnpm run build`.
+4. `pnpm run overlay-types && pnpm run build`.
 
 ### Patch a @quenty Lua module (behaviour change)
 1. `pnpm patch @quenty/<pkg>` — pnpm prints a sandbox path.

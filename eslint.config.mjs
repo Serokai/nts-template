@@ -28,6 +28,18 @@ export default [
       ],
       "simple-import-sort/exports": "error",
       "unused-imports/no-unused-imports": "warn",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["types/nevermore", "types/nevermore/*"],
+              message:
+                "Import from '@quenty/<pkg>' instead. 'types/nevermore/' is the overlay source — importing from it compiles but silently degrades types to 'any' whenever a transitive @quenty package isn't installed.",
+            },
+          ],
+        },
+      ],
     },
   },
 ];

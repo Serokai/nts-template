@@ -5,7 +5,7 @@
   "scripts": {
     "build": "rbxtsc",
     "watch": "rbxtsc -w",
-    "overlay-types": "node scripts/overlay-types.mjs",
+    "overlay-types": "node scripts/overlay-types.mjs && node scripts/generate-nevermore-barrel.mjs",
     "generate-barrel": "node scripts/generate-nevermore-barrel.mjs",
     "postinstall": "node scripts/overlay-types.mjs && node scripts/generate-nevermore-barrel.mjs"
   },

@@ -25,5 +25,5 @@
     "checkJs": false,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "lua/**/*.d.ts", "types/**/*.d.ts"]
+  "include": ["src/**/*", "lua/**/*.d.ts"]
 }
