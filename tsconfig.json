@@ -23,7 +23,8 @@
     "experimentalDecorators": true,
     "allowJs": true,
     "checkJs": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "preserveSymlinks": true
   },
   "include": ["src/**/*", "lua/**/*.d.ts"]
 }
