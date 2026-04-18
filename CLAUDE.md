@@ -1,6 +1,6 @@
 # nts-template
 
-Nevermore is a collection of Lua modules that accelerate Roblox development so you can focus on gameplay. This template wires Nevermore into a TypeScript project with type ownership and a patching workflow pre-configured.
+Nevermore is a collection of Lua modules that accelerate Roblox development so you can focus on gameplay. This template exists to start a new TypeScript project on top of Nevermore quickly.
 
 Made possible thanks to [Daimywil](https://github.com/Daimywil), whose roblox-ts fork bridges TypeScript and Nevermore's string-require pattern, and whose extensive TypeScript declarations for Nevermore modules served as the starting point for `types/nevermore/`.
 
