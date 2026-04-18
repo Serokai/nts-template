@@ -62,6 +62,39 @@ patches/@quenty/maid/src/Shared/
 
 On `pnpm up @quenty/<pkg>`, diff the upstream file against your patched version and reconcile manually.
 
+## Common tasks
+
+### Add a missing member to an existing @quenty type
+1. Find the declaration: `types/nevermore/<pkg>/src/<Server|Client|Shared>/<Module>.d.ts`.
+2. Add the missing property / method signature. Match the style of neighbouring declarations.
+3. `pnpm run overlay-types` — copies the updated `.d.ts` into `node_modules/@quenty/<pkg>/`.
+4. Verify in VS Code: the new member appears in autocomplete.
+
+### Add types for a whole @quenty module that has none
+1. Look at `node_modules/@quenty/<pkg>/` to understand the Lua surface (exported functions, classes).
+2. Create `types/nevermore/<pkg>/index.d.ts` and mirror the Lua structure: re-export each submodule.
+3. For each Lua module under `src/Shared/<Module>.lua`, create `types/nevermore/<pkg>/src/Shared/<Module>.d.ts` with the matching signatures.
+4. `pnpm run overlay-types && pnpm run generate-barrel`.
+5. Run `pnpm run build` to make sure nothing else broke.
+
+### Patch a @quenty Lua module (behaviour change)
+1. Copy the file you want to patch from `node_modules/@quenty/<pkg>/<path>/<File>.lua` to `patches/@quenty/<pkg>/<path>/<File>.lua`.
+2. Edit the copy under `patches/`. Leave `node_modules/` untouched (it gets overlayed).
+3. If you added new exports, edit the matching `.d.ts` under `types/nevermore/<pkg>/<path>/<File>.d.ts`.
+4. `pnpm run overlay-types`.
+5. Test in Studio. The overlay is re-applied on every `pnpm install`, so the patch survives reinstalls.
+6. On `pnpm up @quenty/<pkg>`: diff the new upstream file against `patches/@quenty/<pkg>/<path>/<File>.lua` and reconcile.
+
+### Add a new ServiceBag service
+1. Create `src/modules/<area>/<Server|Client|Shared>/<Name>Service.ts` following the `ExampleService` pattern.
+2. Register it inside `GameService.Init()` (server) or `GameServiceClient.Init()` (client) with `serviceBag.GetService(<Name>Service)`.
+3. Implement `Init(serviceBag)` (capture dependencies) and `Start()` (run side effects). Never do work in the constructor.
+
+### Install a new @quenty package
+1. `pnpm add @quenty/<pkg>`.
+2. If `types/nevermore/<pkg>/` does not exist yet, follow "Add types for a whole @quenty module that has none".
+3. Otherwise `pnpm run overlay-types` is enough — postinstall already ran it.
+
 ## Template updates
 
 This repo is meant to be consumed via GitHub. A game repo created from it can pull template updates:
