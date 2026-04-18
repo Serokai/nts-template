@@ -26,5 +26,5 @@
     "skipLibCheck": true,
     "preserveSymlinks": true
   },
-  "include": ["src/**/*", "lua/**/*.d.ts"]
+  "include": ["src/**/*", "lua/**/*.d.ts", "types/*.d.ts"]
 }
