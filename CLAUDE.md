@@ -52,6 +52,16 @@ For any other @quenty class, create a matching `lua/shared/Shared/<Name>Wrapper.
 2. Register via `serviceBag.GetService(<Name>Service)` inside `GameService.Init()` or `GameServiceClient.Init()`.
 3. Capture dependencies in `Init(serviceBag)`, run side effects in `Start()`. Never do work in constructors — `Init` runs across all services before any `Start`.
 
+## Upstream a change from a game repo back to the template
+
+When you're working inside a game repo (not the template) and you edit a template-owned file — `types/nevermore/`, `scripts/`, `CLAUDE.md`, `lua/shared/Shared/` — you can push that change to the template with one command:
+
+```bash
+nts promote -m "feat(types): add missing Maid members" types/nevermore/maid/src/Shared/Maid.d.ts
+```
+
+This clones the template into a temp dir, copies the current state of the listed files from your game, commits with your message, pushes `main`, and cleans up. No manual cherry-picking. Requires the `template` remote to exist (the `nts` CLI sets it up when it creates the game repo).
+
 ## Template updates
 
 To pull improvements from the template into an existing game repo:
