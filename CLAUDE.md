@@ -10,7 +10,7 @@ Made possible thanks to [Daimywil](https://github.com/Daimywil), whose roblox-ts
 pnpm run build           # TS → Luau
 pnpm run watch
 rojo serve
-pnpm run overlay-types   # Copy types/nevermore + patches/ into node_modules/@quenty
+pnpm run overlay-types   # Copy types/nevermore into node_modules/@quenty
 pnpm run generate-barrel # Regen src/shared/nevermore.d.ts
 ```
 
@@ -40,12 +40,12 @@ For any other @quenty class, create a matching `lua/shared/Shared/<Name>Wrapper.
 3. For each Lua module, write the matching `.d.ts` under the same relative path.
 4. `pnpm run overlay-types && pnpm run generate-barrel && pnpm run build`.
 
-### Patch a @quenty Lua module
-1. Copy the target file from `node_modules/@quenty/<pkg>/...` to `patches/@quenty/<pkg>/...` (same relative path).
-2. Edit the copy under `patches/`.
-3. If new exports: update the matching `.d.ts` under `types/nevermore/`.
-4. `pnpm run overlay-types`.
-5. On `pnpm up @quenty/<pkg>`: diff the new upstream against your patched file and reconcile.
+### Patch a @quenty Lua module (behaviour change)
+1. `pnpm patch @quenty/<pkg>` — pnpm prints a sandbox path.
+2. Edit the relevant `.lua` files inside that sandbox.
+3. `pnpm patch-commit "<printed sandbox path>"` — pnpm writes `patches/@quenty__<pkg>@<version>.patch`, adds it to `pnpm-lock.yaml` under `patchedDependencies`, and re-runs install (which re-overlays types via `postinstall`).
+4. If new exports: update the matching `.d.ts` under `types/nevermore/<pkg>/...` and run `pnpm run overlay-types`.
+5. On `pnpm up @quenty/<pkg>`: pnpm re-applies the patch; if a hunk fails, it errors loudly — edit the `.patch` (or redo steps 1–3 against the new version) to reconcile.
 
 ### Add a new ServiceBag service
 1. Create `src/modules/<area>/<Server|Client|Shared>/<Name>Service.ts` like `ExampleService`.
@@ -82,5 +82,5 @@ If the merge reports conflicts, open each conflicted file, keep the right side (
 - Edit `src/shared/nevermore.d.ts` — auto-generated. Run `pnpm run generate-barrel`.
 - Import from `src/shared/nevermore` at runtime — `.d.ts` barrel, zero runtime. Import `@quenty/*` directly.
 - Use `npx rbxtsc` — use `pnpm run build` to avoid npm hoist warnings.
-- Use `pnpm patch` — use the `patches/@quenty/` overlay instead.
 - Change `node-linker=hoisted` in `.npmrc` — Nevermore's Lua loader relies on flat `node_modules`.
+- Run `pnpm install --ignore-scripts` — skips `postinstall`, so types never overlay into `node_modules/@quenty/*` and the compiler will see wrong types.
