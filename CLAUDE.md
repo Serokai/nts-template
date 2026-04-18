@@ -1,8 +1,8 @@
 # nts-template
 
-Nevermore is a collection of Lua modules that accelerate Roblox development so you can focus on gameplay. This template wires Nevermore into a TypeScript project (roblox-ts Daimywil fork) with type ownership and a patching workflow pre-configured.
+Nevermore is a collection of Lua modules that accelerate Roblox development so you can focus on gameplay. This template wires Nevermore into a TypeScript project with type ownership and a patching workflow pre-configured.
 
-Stack: roblox-ts (Daimywil fork) + NevermoreEngine + ServiceBag DI, Rojo sync, pnpm with `node-linker=hoisted` (**required** — Nevermore loader breaks otherwise).
+Made possible thanks to [Daimywil](https://github.com/Daimywil), whose roblox-ts fork bridges TypeScript and Nevermore's string-require pattern.
 
 ## Commands
 
@@ -87,3 +87,4 @@ Resolve conflicts, commit.
 - Import from `src/shared/nevermore` at runtime — `.d.ts` barrel, zero runtime. Import `@quenty/*` directly.
 - Use `npx rbxtsc` — use `pnpm run build` to avoid npm hoist warnings.
 - Use `pnpm patch` — use the `patches/@quenty/` overlay instead.
+- Change `node-linker=hoisted` in `.npmrc` — Nevermore's Lua loader relies on flat `node_modules`.
