@@ -29,6 +29,9 @@
           "@quenty": {
             "$path": "node_modules/@quenty"
           },
+          "@quentystudios": {
+            "$path": "node_modules/@quentystudios"
+          },
           "@rbxts": {
             "$path": "node_modules/@rbxts"
           }
