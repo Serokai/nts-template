@@ -10,7 +10,7 @@
     "postinstall": "node scripts/overlay-types.mjs && node scripts/generate-nevermore-barrel.mjs"
   },
   "devDependencies": {
-    "@daimywil/roblox-ts-nevermore": "github:Serokai/nts#v9.0.0-nevermore.1",
+    "@daimywil/roblox-ts-nevermore": "github:Serokai/nts#v9.0.0-nevermore.2",
     "@rbxts/compiler-types": "3.0.0-types.0",
     "@rbxts/types": "latest",
     "@typescript-eslint/parser": "^8.58.1",
