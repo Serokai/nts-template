@@ -1,0 +1,15 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "tsc watch",
+      "type": "shell",
+      "command": "pnpm exec tsc --watch --noEmit --preserveWatchOutput",
+      "isBackground": true,
+      "problemMatcher": "$tsc-watch",
+      "presentation": { "reveal": "never", "panel": "dedicated" },
+      "runOptions": { "runOn": "folderOpen" },
+      "group": { "kind": "build", "isDefault": true }
+    }
+  ]
+}
