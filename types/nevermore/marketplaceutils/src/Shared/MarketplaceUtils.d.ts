@@ -4,27 +4,27 @@ export namespace MarketplaceUtils {
   function promiseProductInfo(
     assetId: number,
     infoType: Enum.InfoType.Asset
-  ): AssetProductInfo;
+  ): Promise<AssetProductInfo>;
   function promiseProductInfo(
     assetId: number,
     infoType: Enum.InfoType.Bundle
-  ): BundleInfo;
+  ): Promise<BundleInfo>;
   function promiseProductInfo(
     assetId: number,
     infoType: Enum.InfoType.GamePass
-  ): GamePassProductInfo;
+  ): Promise<GamePassProductInfo>;
   function promiseProductInfo(
     assetId: number,
     infoType: Enum.InfoType.Product
-  ): DeveloperProductInfo;
+  ): Promise<DeveloperProductInfo>;
   function promiseProductInfo(
     assetId: number,
     infoType: Enum.InfoType.Subscription
-  ): SubscriptionProductInfo;
+  ): Promise<SubscriptionProductInfo>;
   function promiseProductInfo(
     assetId: number,
     infoType: Enum.InfoType
-  ): ProductInfo;
+  ): Promise<ProductInfo>;
 
   function promiseUserSubscriptionStatus(
     player: Player,
